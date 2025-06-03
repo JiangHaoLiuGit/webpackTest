@@ -18,6 +18,7 @@ npx webpack ./src/main.js --mode=development
 // module
 // require()
 
+
 // 配置完了webpack可以这么打包
 npx webpack
 ````
