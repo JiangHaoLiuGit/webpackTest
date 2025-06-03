@@ -1,23 +1,7 @@
 ````js
-//创建packeage.json 依赖
-npm init -y
+//loader 使用 => 如果不熟悉推荐去官方文档中找 https://webpack.docschina.org/loaders/ 官方文档找不到的话，可以从社区 Github 中搜索查询
+// webpack 能处理js文件所以打包不用引入loader,如果要处理其他的非js文件,比如css,那就要配置loader文件
 
-//安装依赖
-npm i webpack webpack-cli -D
 
-//npx ... npx可以运行node_module > .bin里面的指定程序
-// development开发模式
-// production生产模式
-// 没有webpack配置文件(webpack.config.js)可以这么打包
-npx webpack ./src/main.js --mode=development
 
-// common.js规范
-// __dirname 处理绝对路径
-// __filename 处理相对路径
-// exports
-// module
-// require()
-
-// 配置完了webpack可以这么打包
-npx webpack
 ````

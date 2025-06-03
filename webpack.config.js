@@ -13,6 +13,12 @@ module.exports = {
     module:{
         rules: [
             //loader配置
+            {
+                //用来匹配.css结尾的文件
+                test: /\.css$/,
+                // use数组里面的loader执行顺序是从右到左的
+                use:['style-loader','css-loader'],
+            }
         ],
     },
     // 插件
