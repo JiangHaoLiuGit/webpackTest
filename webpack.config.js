@@ -6,8 +6,8 @@ module.exports = {
     output:{
         // 文件的输出路径 绝对路径
         path:path.resolve(__dirname,"dist"),
-        // 文件名
-        filename: "wbepackJs.js"
+        // 入口文件输出的文件名
+        filename: "static/js/wbepackJs.js"
     },
     // 加载器
     module:{
@@ -37,7 +37,7 @@ module.exports = {
             },
             {
                 test:/\.(png|jpe?g|gif|webp)$/,
-                type:"asset",
+                type:"asset/resource",
                 parser:{
                     dataUrlCondition:{
                         // 小于30kb的会被打包成base 64位图片
@@ -45,6 +45,12 @@ module.exports = {
                         // 会增加30%打包体积,所以只打包小图片,大图就性价比不高
                         maxSize:30 * 1024
                     }
+                },
+                // hash webpack生产的hash值
+                // ext 图片的后缀png/jpg
+                // query 图片的地址参数 ?name="???"
+                generator:{
+                    filename:"static/img/[hash][ext][query]"
                 }
             },
         ],
