@@ -18,7 +18,35 @@ module.exports = {
                 test: /\.css$/,
                 // use数组里面的loader执行顺序是从右到左的
                 use:['style-loader','css-loader'],
-            }
+            },
+            {
+                test: /\.less$/,
+                use:['style-loader','css-loader','less-loader']
+            },
+            {
+                test:/\.s[ac]ss$/,
+                use:[
+                    'style-loader',// 将 JS 字符串生成为 style 节点
+                    'css-loader',// 将 CSS 转化成 CommonJS 模块
+                    'sass-loader'// 将 Sass 编译成 CSS
+                ]
+            },
+            {
+                test:/\.styl$/,
+                use:['style-loader','css-loader','stylus-loader']
+            },
+            {
+                test:/\.(png|jpe?g|gif|webp)$/,
+                type:"asset",
+                parser:{
+                    dataUrlCondition:{
+                        // 小于30kb的会被打包成base 64位图片
+                        // 可以减少小图片(小于30kb)的请求次数,减少服务器请求压力
+                        // 会增加30%打包体积,所以只打包小图片,大图就性价比不高
+                        maxSize:30 * 1024
+                    }
+                }
+            },
         ],
     },
     // 插件

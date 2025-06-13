@@ -11,7 +11,14 @@
   "description": "",
   "devDependencies": {
     "css-loader": "^7.1.2",
+    "less": "^4.3.0",
+    "less-loader": "^12.3.0",
+    "sass": "^1.89.1",
+    "sass-loader": "^16.0.5",
+    "scss-loader": "^0.0.1",
     "style-loader": "^4.0.0",
+    "stylus": "^0.64.0",
+    "stylus-loader": "^8.1.1",
     "webpack": "^5.99.9",
     "webpack-cli": "^6.0.1"
   }

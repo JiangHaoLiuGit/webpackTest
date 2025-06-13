@@ -3,3 +3,20 @@
     height: 100px;
     background: pink;
 }
+.boxImg{
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+}
+.boxImg1{
+    background-image:url(../../image/manhua.jpg);
+    background-size: cover;
+}
+.boxImg2{
+    background-image:url(../../image/dong.gif);
+    background-size: cover;
+}
+.boxImg3{
+    background-image:url(../../image/dog.webp);
+    background-size: cover;
+}
