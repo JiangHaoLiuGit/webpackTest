@@ -7,7 +7,9 @@ module.exports = {
         // 文件的输出路径 绝对路径
         path:path.resolve(__dirname,"dist"),
         // 入口文件输出的文件名
-        filename: "static/js/wbepackJs.js"
+        filename: "static/js/wbepackJs.js",
+        // weback5 不需要添加plugin了,直接内置功能,因为功能太基础了不需要分出去pulgin插件
+        clean:true,
     },
     // 加载器
     module:{
