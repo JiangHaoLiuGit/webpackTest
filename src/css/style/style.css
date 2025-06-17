@@ -20,3 +20,11 @@
     background-image:url(../../image/dog.webp);
     background-size: cover;
 }
+
+.iconfont{
+    font-size: 40px;
+    transition: .5s;
+}
+.iconfont:hover{
+    font-size: 80px;
+}

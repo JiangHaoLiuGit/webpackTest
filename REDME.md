@@ -4,7 +4,14 @@
 // 处理css 需要的loader
 // css-loader 将css编译成webpack能识别的模块
 // style-loader 创建一个style标签,里面放置的是webpack处理后的css模块内容
-
-
+// less-loader webpack处理less文件
+// sass-loader webpack处理sass/scss文件
+// stylus-loader webpack处理.styl文件
+// 处理图片资源
+// 修改图片输出目录
+// 自动清空上次打包内容
+// 处理字体文件
+// 处理js文件 因为现在打包的js,比如es6的箭头函数,promise打包出来仍然是js6语法,有些浏览器不认识es6,比如ie浏览器,这种代码放到ie浏览器直接白屏,客户要骂娘了,至少要兼容ie11吧,所以得进一步打包配置
+// 为什么要引入eslint ,eslint能干嘛,用的时候该怎么用
 
 ````

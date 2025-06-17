@@ -55,6 +55,13 @@ module.exports = {
                     filename:"static/img/[hash][ext][query]"
                 }
             },
+            {
+                test:/\.(ttf|woff2?|mp3|map4|avi)$/,
+                type:"asset/resource",
+                generator:{
+                    filename:"static/media/[hash:10][ext][query]"
+                }
+            }
         ],
     },
     // 插件

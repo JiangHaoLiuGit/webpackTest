@@ -1,5 +1,6 @@
 import {count} from './js/count'
 import {num} from './js/num'
+import './css/iconfont.css'
 import './css/style/style.css'
 import './css/less/index.less'
 import './css/sass/index.sass'
