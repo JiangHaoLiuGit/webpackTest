@@ -7,5 +7,6 @@ import './css/sass/index.sass'
 import './css/sass/index.scss'
 import './css/stylus/index.styl'
 
-// console.log(num(1,3,6,7))
-// console.log(count(6,2))
+let nums = num(1,3,6,7)
+console.log(nums)
+console.log(count(6,2))

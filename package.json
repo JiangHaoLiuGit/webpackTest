@@ -20,6 +20,8 @@
     "stylus": "^0.64.0",
     "stylus-loader": "^8.1.1",
     "webpack": "^5.99.9",
-    "webpack-cli": "^6.0.1"
+    "webpack-cli": "^6.0.1",
+    "eslint": "^9.11.0",
+    "eslint-webpack-plugin": "^4.2.0"
   }
 }
