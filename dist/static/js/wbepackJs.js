@@ -266,7 +266,7 @@ eval("module.exports = __webpack_require__.p + \"static/img/9f6cea8ea307a55fa1ef
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   count: () => (/* binding */ count)\n/* harmony export */ });\nfunction count(x,y){\r\n    return x - y\r\n}\n\n//# sourceURL=webpack://webpack_newcode/./src/js/count.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   count: () => (/* binding */ count)\n/* harmony export */ });\nfunction count(x, y) {\n  return x - y;\n}\n\n//# sourceURL=webpack://webpack_newcode/./src/js/count.js?");
 
 /***/ }),
 
@@ -276,7 +276,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \***********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   num: () => (/* binding */ num)\n/* harmony export */ });\nfunction num(...arg){\r\n    return arg.reduce((n,preV) => n + preV,0)\r\n}\n\n//# sourceURL=webpack://webpack_newcode/./src/js/num.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   num: () => (/* binding */ num)\n/* harmony export */ });\nfunction num() {\n  for (var _len = arguments.length, arg = new Array(_len), _key = 0; _key < _len; _key++) {\n    arg[_key] = arguments[_key];\n  }\n  return arg.reduce(function (n, preV) {\n    return n + preV;\n  }, 0);\n}\n\n//# sourceURL=webpack://webpack_newcode/./src/js/num.js?");
 
 /***/ }),
 
@@ -286,7 +286,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \*********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _js_count__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./js/count */ \"./src/js/count.js\");\n/* harmony import */ var _js_num__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/num */ \"./src/js/num.js\");\n/* harmony import */ var _css_iconfont_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./css/iconfont.css */ \"./src/css/iconfont.css\");\n/* harmony import */ var _css_style_style_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./css/style/style.css */ \"./src/css/style/style.css\");\n/* harmony import */ var _css_less_index_less__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./css/less/index.less */ \"./src/css/less/index.less\");\n/* harmony import */ var _css_sass_index_sass__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./css/sass/index.sass */ \"./src/css/sass/index.sass\");\n/* harmony import */ var _css_sass_index_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./css/sass/index.scss */ \"./src/css/sass/index.scss\");\n/* harmony import */ var _css_stylus_index_styl__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./css/stylus/index.styl */ \"./src/css/stylus/index.styl\");\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\nlet nums = (0,_js_num__WEBPACK_IMPORTED_MODULE_1__.num)(1,3,6,7)\r\nconsole.log(nums)\r\nconsole.log((0,_js_count__WEBPACK_IMPORTED_MODULE_0__.count)(6,2))\r\n\n\n//# sourceURL=webpack://webpack_newcode/./src/main.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _js_count__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./js/count */ \"./src/js/count.js\");\n/* harmony import */ var _js_num__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/num */ \"./src/js/num.js\");\n/* harmony import */ var _css_iconfont_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./css/iconfont.css */ \"./src/css/iconfont.css\");\n/* harmony import */ var _css_style_style_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./css/style/style.css */ \"./src/css/style/style.css\");\n/* harmony import */ var _css_less_index_less__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./css/less/index.less */ \"./src/css/less/index.less\");\n/* harmony import */ var _css_sass_index_sass__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./css/sass/index.sass */ \"./src/css/sass/index.sass\");\n/* harmony import */ var _css_sass_index_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./css/sass/index.scss */ \"./src/css/sass/index.scss\");\n/* harmony import */ var _css_stylus_index_styl__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./css/stylus/index.styl */ \"./src/css/stylus/index.styl\");\n\n\n\n\n\n\n\n\nvar nums = (0,_js_num__WEBPACK_IMPORTED_MODULE_1__.num)(1, 3, 6, 7);\nconsole.log(nums);\nconsole.log((0,_js_count__WEBPACK_IMPORTED_MODULE_0__.count)(6, 2));\n\n//# sourceURL=webpack://webpack_newcode/./src/main.js?");
 
 /***/ })
 
