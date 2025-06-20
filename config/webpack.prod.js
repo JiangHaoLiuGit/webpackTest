@@ -1,6 +1,7 @@
 const path = require("path") //nodejs 核心模块,用来处理路径问题
 const HTMLWebpackPlugin = require("html-webpack-plugin")
 const ESLintPlugin = require("eslint-webpack-plugin")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
 module.exports = {
     //入口 相对路径
@@ -22,23 +23,23 @@ module.exports = {
                 //用来匹配.css结尾的文件
                 test: /\.css$/,
                 // use数组里面的loader执行顺序是从右到左的
-                use:['style-loader','css-loader'],
+                use:[MiniCssExtractPlugin.loader,'css-loader'],
             },
             {
                 test: /\.less$/,
-                use:['style-loader','css-loader','less-loader']
+                use:[MiniCssExtractPlugin.loader,'css-loader','less-loader']
             },
             {
                 test:/\.s[ac]ss$/,
                 use:[
-                    'style-loader',// 将 JS 字符串生成为 style 节点
+                    MiniCssExtractPlugin.loader,// 将css提取成一个文件
                     'css-loader',// 将 CSS 转化成 CommonJS 模块
                     'sass-loader'// 将 Sass 编译成 CSS
                 ]
             },
             {
                 test:/\.styl$/,
-                use:['style-loader','css-loader','stylus-loader']
+                use:[MiniCssExtractPlugin.loader,'css-loader','stylus-loader']
             },
             {
                 test:/\.(png|jpe?g|gif|webp)$/,
@@ -81,6 +82,9 @@ module.exports = {
         }),
         new HTMLWebpackPlugin({
             template:path.resolve(__dirname,'../public/index.html')
+        }),
+        new MiniCssExtractPlugin({
+            filename:"static/css/[name].[contenthash:8].css"
         })
     ],
     // 模式
