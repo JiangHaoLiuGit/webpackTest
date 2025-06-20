@@ -88,6 +88,7 @@ module.exports = {
         host:"localhost",// 启动服务器域名
         port:3000,// 端口号
         open:true,// 是否自动打开
+        hot:true,//是否开启热模块替换
     },
     // 模式
     mode:"development",

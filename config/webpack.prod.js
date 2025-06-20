@@ -103,6 +103,9 @@ module.exports = {
         }),
         new CssMinimizerWebpackPlugin()
     ],
+    devServer:{
+        hot:false,//关闭,这里默认是开启(HMR)的,所以生产模式必须写
+    },
     // 模式
     mode:"production",
     // 生产模式的源代码映射配置:映射到具体哪一行那一列,缺点打包会比较慢

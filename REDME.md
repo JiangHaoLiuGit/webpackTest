@@ -36,5 +36,8 @@
 // sourceMap 为什么要开启,怎么用
 // 生产模式和开发模式需要做到什么程度的源代码映射?
 
-
+// hostModuleReplace 模式 简称host:true
+// 但有劣势的,js文件不支持,只支持改了css样式可以补充下打包,因为style-loader支持这个HMR
+// js文件要想用HMR得话得自己写js代码
+// 但是写vue/react项目的时候不要要写这些js代码,因为vue-loader/react-hot-loader帮我们做这些事情了,所以vue/react项目还是非常给力的
 ````
