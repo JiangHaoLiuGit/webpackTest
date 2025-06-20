@@ -7,12 +7,12 @@ module.exports = {
     entry: './src/main.js',
     //输出
     output:{
-        // 文件的输出路径 绝对路径
-        path:path.resolve(__dirname,"dist"),
+        // 开发模式不需要输出文件名地址
+        path:undefined,
         // 入口文件输出的文件名
         filename: "static/js/wbepackJs.js",
-        // weback5 不需要添加plugin了,直接内置功能,因为功能太基础了不需要分出去pulgin插件
-        clean:true,
+        // 开发模式不需要开启这个
+        clean:false,
     },
     // 加载器
     module:{
@@ -77,12 +77,18 @@ module.exports = {
         //plugin 的配置
         new ESLintPlugin({
             // 检测哪些文件
-            context:path.resolve(__dirname,"src")
+            context:path.resolve(__dirname,"../src")
         }),
         new HTMLWebpackPlugin({
-            template:path.resolve(__dirname,'public/index.html')
+            template:path.resolve(__dirname,'../public/index.html')
         })
     ],
+    //开发服务器
+    devServer:{
+        host:"localhost",// 启动服务器域名
+        port:3000,// 端口号
+        open:true,// 是否自动打开
+    },
     // 模式
     mode:"development",
 }
