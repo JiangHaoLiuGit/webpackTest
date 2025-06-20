@@ -91,4 +91,6 @@ module.exports = {
     },
     // 模式
     mode:"development",
+    // 开发模式的源代码映射配置:只映射到哪一行,构建更快
+    devtool:"cheap-module-source-map"
 }

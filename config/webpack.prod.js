@@ -105,4 +105,6 @@ module.exports = {
     ],
     // 模式
     mode:"production",
+    // 生产模式的源代码映射配置:映射到具体哪一行那一列,缺点打包会比较慢
+    devtool:"source-map"
 }
