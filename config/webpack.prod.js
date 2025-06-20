@@ -2,6 +2,7 @@ const path = require("path") //nodejs 核心模块,用来处理路径问题
 const HTMLWebpackPlugin = require("html-webpack-plugin")
 const ESLintPlugin = require("eslint-webpack-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const CssMinimizerWebpackPlugin = require("css-minimizer-webpack-plugin")
 
 function getStyleLoader(loaderName){
     return [
@@ -99,7 +100,8 @@ module.exports = {
         }),
         new MiniCssExtractPlugin({
             filename:"static/css/[name].[contenthash:8].css"
-        })
+        }),
+        new CssMinimizerWebpackPlugin()
     ],
     // 模式
     mode:"production",
