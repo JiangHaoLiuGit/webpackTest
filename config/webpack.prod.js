@@ -23,23 +23,74 @@ module.exports = {
                 //用来匹配.css结尾的文件
                 test: /\.css$/,
                 // use数组里面的loader执行顺序是从右到左的
-                use:[MiniCssExtractPlugin.loader,'css-loader'],
+                use:[
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    {
+                        loader: "postcss-loader",
+                        options:{
+                            postcssOptions: {
+                                plugins: [
+                                    "postcss-preset-env", // 能解决大多数样式兼容性问题
+                                ]
+                            }
+                        }
+                    }
+                ],
             },
             {
                 test: /\.less$/,
-                use:[MiniCssExtractPlugin.loader,'css-loader','less-loader']
+                use:[
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    {
+                        loader: "postcss-loader",
+                        options:{
+                            postcssOptions: {
+                                plugins: [
+                                    "postcss-preset-env", // 能解决大多数样式兼容性问题
+                                ]
+                            }
+                        }
+                    },
+                    'less-loader'
+                ]
             },
             {
                 test:/\.s[ac]ss$/,
                 use:[
                     MiniCssExtractPlugin.loader,// 将css提取成一个文件
                     'css-loader',// 将 CSS 转化成 CommonJS 模块
+                    {
+                        loader: "postcss-loader",
+                        options:{
+                            postcssOptions: {
+                                plugins: [
+                                    "postcss-preset-env", // 能解决大多数样式兼容性问题
+                                ]
+                            }
+                        }
+                    },
                     'sass-loader'// 将 Sass 编译成 CSS
                 ]
             },
             {
                 test:/\.styl$/,
-                use:[MiniCssExtractPlugin.loader,'css-loader','stylus-loader']
+                use:[
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    {
+                        loader: "postcss-loader",
+                        options:{
+                            postcssOptions: {
+                                plugins: [
+                                    "postcss-preset-env", // 能解决大多数样式兼容性问题
+                                ]
+                            }
+                        }
+                    },
+                    'stylus-loader'
+                ]
             },
             {
                 test:/\.(png|jpe?g|gif|webp)$/,

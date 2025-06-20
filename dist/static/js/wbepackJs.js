@@ -1,1 +1,1 @@
-(()=>{"use strict";var r=function(){for(var r=arguments.length,n=new Array(r),e=0;e<r;e++)n[e]=arguments[e];return n.reduce((function(r,n){return r+n}),0)}(1,3,6,7);console.log(r),console.log(4)})();
+!function(){"use strict";let o=[1,3,6,7].reduce(((o,e)=>o+e),0);console.log(o),console.log(4)}();
