@@ -88,6 +88,10 @@ module.exports = {
                         // exclude: /node_modules/,//处理js文件的时候排除node_modules,因为已经处理过了,在处理会变慢,
                         include:path.resolve(__dirname,"../src"), //只处理src下的js文件,其他文件不处理
                         loader: 'babel-loader',
+                        options:{
+                            cacheDirectory:true,//开启babel缓存
+                            cacheCompression:false,//关闭缓存文件压缩(缺点,占用本地内存,放到node_modules里,优点:打包速度快)
+                        }
                     }
                 ]
             }
@@ -99,7 +103,9 @@ module.exports = {
         new ESLintPlugin({
             // 检测哪些文件
             context:path.resolve(__dirname,"../src"),
-            exclude:"node_modules"//默认值
+            exclude:"node_modules",//默认值
+            cache:true,
+            cacheLocation:path.resolve(__dirname,"../node_modules/.cache/eslintCache")
         }),
         new HTMLWebpackPlugin({
             template:path.resolve(__dirname,'../public/index.html')
