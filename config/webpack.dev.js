@@ -1,6 +1,9 @@
 const path = require("path") //nodejs 核心模块,用来处理路径问题
+const os = require("os")
 const HTMLWebpackPlugin = require("html-webpack-plugin")
 const ESLintPlugin = require("eslint-webpack-plugin")
+
+const threads = os.cpus().length //获取cpu核数
 
 module.exports = {
     //入口 相对路径
@@ -71,7 +74,21 @@ module.exports = {
                         test: /\.js$/,
                         // exclude: /node_modules/,//处理js文件的时候排除node_modules,因为已经处理过了,在处理会变慢,
                         include:path.resolve(__dirname,"../src"), //只处理src下的js文件,其他文件不处理
-                        loader: 'babel-loader',
+                        use:[
+                            {
+                                loader: 'thread-loader',
+                                options:{
+                                    works:threads,//进程数量
+                                }
+                            },
+                            {
+                                loader: 'babel-loader',
+                                options:{
+                                    cacheDirectory:true,//开启babel缓存
+                                    cacheCompression:false,//关闭缓存文件压缩(缺点,占用本地内存,放到node_modules里,优点:打包速度快)
+                                }
+                            }
+                        ]
                     }
                 ]
             }
@@ -83,7 +100,8 @@ module.exports = {
         new ESLintPlugin({
             // 检测哪些文件
             context:path.resolve(__dirname,"../src"),
-            exclude:"node_modules"//默认值
+            exclude:"node_modules",//默认值
+            threads//开启多进程打包
         }),
         new HTMLWebpackPlugin({
             template:path.resolve(__dirname,'../public/index.html')

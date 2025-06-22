@@ -1,8 +1,12 @@
 const path = require("path") //nodejs 核心模块,用来处理路径问题
+const os = require("os")
 const HTMLWebpackPlugin = require("html-webpack-plugin")
 const ESLintPlugin = require("eslint-webpack-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const CssMinimizerWebpackPlugin = require("css-minimizer-webpack-plugin")
+const TerserWebpackPlugin = require("terser-webpack-plugin")
+
+const threads = os.cpus().length //获取cpu核数
 
 function getStyleLoader(loaderName){
     return [
@@ -87,11 +91,21 @@ module.exports = {
                         test: /\.js$/,
                         // exclude: /node_modules/,//处理js文件的时候排除node_modules,因为已经处理过了,在处理会变慢,
                         include:path.resolve(__dirname,"../src"), //只处理src下的js文件,其他文件不处理
-                        loader: 'babel-loader',
-                        options:{
-                            cacheDirectory:true,//开启babel缓存
-                            cacheCompression:false,//关闭缓存文件压缩(缺点,占用本地内存,放到node_modules里,优点:打包速度快)
-                        }
+                        use:[
+                            {
+                                loader: 'thread-loader',
+                                options:{
+                                    works:threads,//进程数量
+                                }
+                            },
+                            {
+                                loader: 'babel-loader',
+                                options:{
+                                    cacheDirectory:true,//开启babel缓存
+                                    cacheCompression:false,//关闭缓存文件压缩(缺点,占用本地内存,放到node_modules里,优点:打包速度快)
+                                }
+                            }
+                        ]
                     }
                 ]
             }
@@ -105,7 +119,8 @@ module.exports = {
             context:path.resolve(__dirname,"../src"),
             exclude:"node_modules",//默认值
             cache:true,
-            cacheLocation:path.resolve(__dirname,"../node_modules/.cache/eslintCache")
+            cacheLocation:path.resolve(__dirname,"../node_modules/.cache/eslintCache"),
+            threads//开启多进程打包
         }),
         new HTMLWebpackPlugin({
             template:path.resolve(__dirname,'../public/index.html')
@@ -113,8 +128,22 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename:"static/css/[name].[contenthash:8].css"
         }),
-        new CssMinimizerWebpackPlugin()
+        // new CssMinimizerWebpackPlugin(),
+        // new TerserWebpackPlugin({
+        //     parallel: threads//开启多进程打包
+        // })
     ],
+    // webpack5 推荐压缩的plugin放到这里,以后会只能放到这里
+    optimization:{
+        minimizer:[
+            // 压缩css的,并且创建link标签引入
+            new CssMinimizerWebpackPlugin(),
+            // terser是webpack生产环境默认激活的压缩js内置插件,这里配置可以加快他的压缩时间
+            new TerserWebpackPlugin({
+                parallel: threads//开启多进程打包
+            })
+        ]
+    },
     devServer:{
         hot:false,//关闭,这里默认是开启(HMR)的,所以生产模式必须写
     },
