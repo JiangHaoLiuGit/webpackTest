@@ -85,7 +85,8 @@ module.exports = {
                     },
                     {
                         test: /\.js$/,
-                        exclude: /node_modules/,
+                        // exclude: /node_modules/,//处理js文件的时候排除node_modules,因为已经处理过了,在处理会变慢,
+                        include:path.resolve(__dirname,"../src"), //只处理src下的js文件,其他文件不处理
                         loader: 'babel-loader',
                     }
                 ]
@@ -97,7 +98,8 @@ module.exports = {
         //plugin 的配置
         new ESLintPlugin({
             // 检测哪些文件
-            context:path.resolve(__dirname,"../src")
+            context:path.resolve(__dirname,"../src"),
+            exclude:"node_modules"//默认值
         }),
         new HTMLWebpackPlugin({
             template:path.resolve(__dirname,'../public/index.html')
