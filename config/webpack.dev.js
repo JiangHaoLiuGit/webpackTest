@@ -86,6 +86,7 @@ module.exports = {
                                 options:{
                                     cacheDirectory:true,//开启babel缓存
                                     cacheCompression:false,//关闭缓存文件压缩(缺点,占用本地内存,放到node_modules里,优点:打包速度快)
+                                    plugins:["@babel/plugin-transform-runtime"],//减少babel产生的代码体积
                                 }
                             }
                         ]

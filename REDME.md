@@ -7,13 +7,13 @@
 // less-loader webpack处理less文件
 // sass-loader webpack处理sass/scss文件
 // stylus-loader webpack处理.styl文件
-// 处理图片资源
-// 修改图片输出目录
-// 自动清空上次打包内容
-// 处理字体文件
+// 处理图片资源 搜索 type:"asset" 小于 xxMb的图片将会被打包成base 64位,可以减少小图片的请求次数
+// 修改图片输出目录 配置filename属性
+// 自动清空上次打包内容 webpack4 要用html-webpack-plugin 在webpack5中只需要在output中配置 clean:true就可以了
+// 处理字体文件 配置 test 正则匹配 类型 type:"asset" filename配置打包出口文件夹
 // 处理js文件 因为现在打包的js,比如es6的箭头函数,promise打包出来仍然是js6语法,有些浏览器不认识es6,比如ie浏览器,这种代码放到ie浏览器直接白屏,客户要骂娘了,至少要兼容ie11吧,所以得进一步打包配置
 // 为什么要引入eslint ,eslint能干嘛,用的时候该怎么用
-// babel 为什么引入
+// babel 为什么引入 处理文件是babelrc.js有的时候是babel.config.js,有什么时候都存在?这应该是版本问题,不同版本配置文件不同
 // 处理html,为什么要处理,不处理行不行,他会自动引入生成的js和css,比如mini-css-webpack-plugin生成的mian.css他会通过link的形式自动引入,js也会自动引入webpackJs.js,如果有多个js生产而且还有复杂先后关系,怕你开发者搞乱了,这点也做的不错,自动引入就不会出错
 
 
@@ -28,10 +28,10 @@
 // }
 //为什么不用npx 因为npm run dev 会默认去node_modeuls>.bin目录找webpack开启服务
 
-// 为什么要把css单独打包,现在就这样不好吗,为什么
+// 为什么要把css单独打包,现在就这样不好吗,为什么    css-minimizer-webpack
 // 因为他会把css打包到js文件中去,运行js文件的同时会解析css,生成style标签生效css属性,如果网速慢就会闪屏
 
-// css 兼容性怎么处理,如果要写ie >= 8怎么做配置
+// css 兼容性怎么处理,如果要写ie >= 8怎么做配置 postcss-loader
 // 引入postcss-loader可以处理兼容性,同时在package.json中写"browserslist":["ie >= 8"]但一般配置都是browserslist:["last 2 version","> 1%","not dead"],全球使用率超过1%的浏览器,同时不要停止维护的浏览器,同时只兼容最近发布的两个版本
 
 //封装cssloader使用
@@ -65,6 +65,13 @@
 // 处理js的,其实不止有baabel/eslint还有一个terser工具,它是压缩js代码的,所以要提升babel/eslint/terser的打包js的速度,这三个都要配置一遍
 
 // 高级 TreeShaking 生产模式默认开启的,没有用到的代码不会打包,开发模式不需要开启,比如utils.js里面export 导出10个函数,文件只用了8个函数,所以生产打包的时候不会将剩余两个打包进去,他只会打包检测到用到的代码,可以减少打包体积,提升应用加载速度和运行时性能.
+
+// 高级 减少babel产生的文件体积 @babel/plugin-transform-runtime
+// Babel 为编译的每个文件都插入了辅助代码，使代码体积过大！
+// Babel 对一些公共方法使用了非常小的辅助代码，比如 _extend。默认情况下会被添加到每一个需要它的文件中。
+// @babel/plugin-transform-runtime: 禁用了 Babel 自动对每个文件的 runtime 注入，而是引入 @babel/plugin-transform-runtime 并且使所有辅助代码从这里引用。
+
+
 
 // 你可以说一下生产和开发有什么区别?
 // 生产需要优化打的包速度,
