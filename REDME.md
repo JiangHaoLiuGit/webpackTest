@@ -96,6 +96,10 @@
 
 // 高级 多入口提取公共模块 方案=> 配置optimization > splitChunks > cacheGroups > default > minSize : 0(默认是2000,超过2000kb的公用组件才会单独打包)
 
+// 高级 多入口按需加载
+// import("./xxx.js") 可以实现按需加载,返回一个promise
+// import("./xxx.js").then(res => {console.log(res)}) //返回一个res模块,比如你想用res.nums方法那么久res.nums()就能调用
+
 
 // 什么是chunk?什么是bundle?
 // 比如:entry:{
