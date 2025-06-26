@@ -94,6 +94,8 @@
 // 表出现来的问题,请看demo1的打包结果,nums方法用了两次,app.js和main.js中,最后打包的时候nums方法被重复打包了两次,如果100个文件中用了nums方法,那么会被打包100次!!!
 // 怎么初始化一个packpage.json文件 npm init -y
 
+// 高级 多入口提取公共模块 方案=> 配置optimization > splitChunks > cacheGroups > default > minSize : 0(默认是2000,超过2000kb的公用组件才会单独打包)
+
 
 // 什么是chunk?什么是bundle?
 // 比如:entry:{
