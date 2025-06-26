@@ -57,11 +57,18 @@
 
 // 高级 include / exclude 能干嘛,不写会怎么样
 // 会把不需要处理的文件再次处理一遍,比如balel/eslint处理第三方库文件
+// 如何开启?
+// js文件只处理src文件中的js => test:正则匹配.js文件下面直接写include:path.resolve(__dirname,'../src')
+// esLint排除某文件 eslintWebPackPlugin下面直接配置exclude:"dist"
 
-// 高级 缓存: 需要开启那些缓存,为什么要开启?
+// 高级 缓存: 需要开启那些缓存,为什么要开启? 
 // 因为webpack处理css/img文件都比较快,在js处理的时候花掉绝大多数时间,而处理js的就是babel/eslint/所以要开启babel/eslint缓存加快构建/打包速度
+// 如何开启?
+// babel-loader 和 eslintwebpackpulign可以开启缓存
+// 先搜索babel-loader,在搜索关键字cache就能找到配置关键词
+// eslintwebpackpulign在pulign中配置直接写cache:true即可开启缓存
 
-// 高级 多线程打包
+// 高级 多线程打包 test: 正则匹配.js里面的use配置 thread-loader 开启多线程
 // 处理js的,其实不止有baabel/eslint还有一个terser工具,它是压缩js代码的,所以要提升babel/eslint/terser的打包js的速度,这三个都要配置一遍
 
 // 高级 TreeShaking 生产模式默认开启的,没有用到的代码不会打包,开发模式不需要开启,比如utils.js里面export 导出10个函数,文件只用了8个函数,所以生产打包的时候不会将剩余两个打包进去,他只会打包检测到用到的代码,可以减少打包体积,提升应用加载速度和运行时性能.
@@ -71,6 +78,48 @@
 // Babel 对一些公共方法使用了非常小的辅助代码，比如 _extend。默认情况下会被添加到每一个需要它的文件中。
 // @babel/plugin-transform-runtime: 禁用了 Babel 自动对每个文件的 runtime 注入，而是引入 @babel/plugin-transform-runtime 并且使所有辅助代码从这里引用。
 
+// 高级 图片压缩 webpack官网搜imageminimizerWebpackPlugin(imagemini关键字)
+// 场景:本地有很多图片可以引入,可以小幅度减小图片占用打包文件的体积
+
+// 面试官:相对路径和绝对路径有什么区别?
+// 绝对路径 => 
+// <a href="/user/index.text"></a> 绝对路径写法(省略协议,域名,端口)
+// 生产环境(https://jujiao.com/) => https://jujiao.com/user/index.html 
+// 开发环境(http://localhost:3000) => http://localhost:3000/user/index.html
+
+// <a href="://jujiao.com/user/index.text"></a>
+// 生产环境(https 加密) => https://jujiao.com/user/index.text
+// 开发环境(http) => http://jujiao.com/user/index.text
+
+// 比如:http://a.com/a/b/c.html
+// c.html中<a href="/1.js"></a>
+// a的href会成为http://a.com/1.js和路径:a/b没有关系
+
+// 相对路径 => http://a.com/a/b/c.html
+// <a href="./1.js"></a> 或者 <a href="1.js"></a> => http://a.com/a/b/1.js
+// <a href="../1.js"></a> => http://a.com/a/1.js
+
+// webpack中的相对路径和绝对路径
+// common.js环境
+// 绝对路径
+// path.resolve(from, to) 将参数to的位置解析到from中
+// 举例:path.resolve("http://jujiao.com/a",./b/1.js) => http://jujiao.com/a/b/1.js
+// 项目目录:
+// src
+// webpack.dev.js
+// img
+// js
+//    user
+//        index.jjs
+// js/user/index.js中找src怎么找 => path.resolve(__dirname,"src")
+// __dirname代表项目的根路径
+
+// 相对路径
+// js/user/index.js中找src怎么找 ../../src
+
+// 如果是vue环境
+// 绝对路径 @/src
+// 相对路径 '../../src'
 
 
 // 你可以说一下生产和开发有什么区别?
