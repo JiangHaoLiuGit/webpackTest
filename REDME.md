@@ -77,9 +77,35 @@
 // Babel 为编译的每个文件都插入了辅助代码，使代码体积过大！
 // Babel 对一些公共方法使用了非常小的辅助代码，比如 _extend。默认情况下会被添加到每一个需要它的文件中。
 // @babel/plugin-transform-runtime: 禁用了 Babel 自动对每个文件的 runtime 注入，而是引入 @babel/plugin-transform-runtime 并且使所有辅助代码从这里引用。
+// 举个例子你就懂了
+// js
+    // a.js import add from './num' export function a(){console.log(add(1,2,3))}
+    // b.js import add from './num' export function b(){console.log(add(1,5,6)))}
+    // num.js export function add(...arg){return arg.reduce((n,val) => n+val,0)}
+// main.js import a from './a.js' import b from './b.js' a() b()
+// 打包的时候会把生成a把a模块和b模块打包生成a.js和b.js,并且会把num.js打包两次,这样打包体积增加了,和每个模块用_extend函数包着同理也会增加包的体积,如果替换成每次从@babel/plugin-transfrom-runtime中引入的话这个重复打包问题就解决了
 
 // 高级 图片压缩 webpack官网搜imageminimizerWebpackPlugin(imagemini关键字)
 // 场景:本地有很多图片可以引入,可以小幅度减小图片占用打包文件的体积
+
+// 高级 多入口 (code split代码分割 => demo1)
+// 为什么要做代码分割 比如100个页面 有100个js
+// 打包的时候会打包成一个js,当加载首页的时候需要把全部js都加载才能显示首页,这样性能非常差劲,所以要做到按需加载和代码分割
+// 表出现来的问题,请看demo1的打包结果,nums方法用了两次,app.js和main.js中,最后打包的时候nums方法被重复打包了两次,如果100个文件中用了nums方法,那么会被打包100次!!!
+// 怎么初始化一个packpage.json文件 npm init -y
+
+
+// 什么是chunk?什么是bundle?
+// 比如:entry:{
+//     app:"./src/app.js",
+//     main:"./src/main.js"
+// }
+// 多入口文件中app.js或者main.js入口文件是chunk,打包结果比如是app => app1.js 和main => main1.js打包结果是bundle
+
+
+
+
+
 
 // 面试官:相对路径和绝对路径有什么区别?
 // 绝对路径 => 

@@ -1,0 +1,1 @@
+(()=>{"use strict";console.log("我是app"),console.log([1,2,5].reduce((o,e)=>o+e,0))})();

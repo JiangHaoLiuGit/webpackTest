@@ -1,0 +1,1 @@
+(()=>{"use strict";console.log("我是main"),console.log([1,2,10].reduce((o,e)=>o+e,0))})();
