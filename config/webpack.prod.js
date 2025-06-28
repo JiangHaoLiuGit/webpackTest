@@ -35,6 +35,8 @@ module.exports = {
         path:path.resolve(__dirname,"../dist"),
         // 入口文件输出的文件名
         filename: "static/js/wbepackJs.js",
+        // 给打包输出的其他文件命名
+        chunkFilename:"static/js/[name].js",
         // weback5 不需要添加plugin了,直接内置功能,因为功能太基础了不需要分出去pulgin插件
         clean:true,
     },

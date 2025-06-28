@@ -7,7 +7,8 @@ import './css/sass/index.scss'
 import './css/stylus/index.styl'
 
 document.getElementById("computedBtn").onclick = function(){
-    import('./js/count').then(({count})=>{
+    // /*webpackChunkName: "math" */ webpack 魔法命名
+    import(/*webpackChunkName: "math" */'./js/count').then(({count})=>{
         console.log(count(6,2))
     })
 }

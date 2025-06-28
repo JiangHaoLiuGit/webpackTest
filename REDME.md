@@ -113,7 +113,8 @@
 //     }
 // }
 
-
+// 高级 splitChunks 给代码分割模块命名
+// webpack注释魔法命名 /*webpackChunkname: "xxxx"*/
 
 
 
