@@ -12,8 +12,12 @@ module.exports = {
     output:{
         // 开发模式不需要输出文件名地址
         path:undefined,
-        // 入口文件输出的文件名
-        filename: "static/js/wbepackJs.js",
+        // 入口文件输出的文件名 [name] 单入口的话就是和入口文件名字一致,如果是多入口的话也能这么写.所以非常合适
+        filename: "static/js/[name].js",
+        // 给打包输出的其他文件命名
+        chunkFilename:"static/js/[name].chunk.js",
+        // 图片,字体等通过type:asset处理的资源都会打包到这里
+        assetModuleFilename:"static/media/[hash][ext][query]",
         // 开发模式不需要开启这个
         clean:false,
     },
@@ -46,8 +50,8 @@ module.exports = {
                         use:['style-loader','css-loader','stylus-loader']
                     },
                     {
-                        test:/\.(png|jpe?g|gif|webp)$/,
-                        type:"asset/resource",
+                        test:/\.(png|jpe?g|gif|webp|svg)$/,
+                        type:"asset",
                         parser:{
                             dataUrlCondition:{
                                 // 小于30kb的会被打包成base 64位图片
@@ -59,16 +63,16 @@ module.exports = {
                         // hash webpack生产的hash值
                         // ext 图片的后缀png/jpg
                         // query 图片的地址参数 ?name="???"
-                        generator:{
-                            filename:"static/img/[hash][ext][query]"
-                        }
+                        // generator:{
+                        //     filename:"static/img/[hash][ext][query]"
+                        // }
                     },
                     {
                         test:/\.(ttf|woff2?|mp3|map4|avi)$/,
                         type:"asset/resource",
-                        generator:{
-                            filename:"static/media/[hash:10][ext][query]"
-                        }
+                        // generator:{
+                        //     filename:"static/media/[hash:10][ext][query]"
+                        // }
                     },
                     {
                         test: /\.js$/,

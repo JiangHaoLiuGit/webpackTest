@@ -33,10 +33,12 @@ module.exports = {
     output:{
         // 文件的输出路径 绝对路径
         path:path.resolve(__dirname,"../dist"),
-        // 入口文件输出的文件名
-        filename: "static/js/wbepackJs.js",
+        // 入口文件输出的文件名 [name] 单入口的话就是和入口文件名字一致,如果是多入口的话也能这么写.所以非常合适
+        filename: "static/js/[name].js",
         // 给打包输出的其他文件命名
-        chunkFilename:"static/js/[name].js",
+        chunkFilename:"static/js/[name].chunk.js",
+        // 图片,字体等通过type:asset处理的资源都会打包到这里
+        assetModuleFilename:"static/media/[hash][ext][query]",
         // weback5 不需要添加plugin了,直接内置功能,因为功能太基础了不需要分出去pulgin插件
         clean:true,
     },
@@ -65,8 +67,8 @@ module.exports = {
                         use:getStyleLoader('stylus-loader')
                     },
                     {
-                        test:/\.(png|jpe?g|gif|webp)$/,
-                        type:"asset/resource",
+                        test:/\.(png|jpe?g|gif|webp|svg)$/,
+                        type:"asset",
                         parser:{
                             dataUrlCondition:{
                                 // 小于30kb的会被打包成base 64位图片
@@ -78,16 +80,16 @@ module.exports = {
                         // hash webpack生产的hash值
                         // ext 图片的后缀png/jpg
                         // query 图片的地址参数 ?name="???"
-                        generator:{
-                            filename:"static/img/[hash][ext][query]"
-                        }
+                        // generator:{
+                        //     filename:"static/img/[hash][ext][query]"
+                        // }
                     },
                     {
                         test:/\.(ttf|woff2?|mp3|map4|avi)$/,
                         type:"asset/resource",
-                        generator:{
-                            filename:"static/media/[hash:10][ext][query]"
-                        }
+                        // generator:{
+                        //     filename:"static/media/[hash:10][ext][query]"
+                        // }
                     },
                     {
                         test: /\.js$/,
@@ -129,7 +131,8 @@ module.exports = {
             template:path.resolve(__dirname,'../public/index.html')
         }),
         new MiniCssExtractPlugin({
-            filename:"static/css/[name].[contenthash:8].css"
+            filename:"static/css/[name].[contenthash:8].css",
+            chunkFilename:"static/css/[name].[contenthash:8].chunk.css"
         }),
         // new CssMinimizerWebpackPlugin(),
         // new TerserWebpackPlugin({
