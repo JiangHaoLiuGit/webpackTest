@@ -116,6 +116,10 @@
 // 高级 splitChunks 给代码分割模块命名
 // webpack注释魔法命名 /*webpackChunkname: "xxxx"*/
 
+// 高级 splitChunks 给打包文件统一整体命名
+
+
+
 
 
 // 面试官:相对路径和绝对路径有什么区别?
