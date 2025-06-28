@@ -81,6 +81,42 @@
 // 高级 图片压缩 webpack官网搜imageminimizerWebpackPlugin(imagemini关键字)
 // 场景:本地有很多图片可以引入,可以小幅度减小图片占用打包文件的体积
 
+// 高级 codesplit 多入口 demo1
+// 高级 codesplit 多入口提取公公模块 deme2
+// 高级 codesplit 按需加载 多入口 deom3
+
+// 高级 codesplit 单入口 代码分割 面试必问,就是两个原因,防止重复打包和动态引入解决页面加载慢的情况
+// 做的好处 1.公共代码,比如node_moduels中的loadsh用到多次的公共方法会打包成一个文件,防止用到10次,打的包10次
+// 2.动态导入文件,比如XXX场景下,比如点击或者XXX页面加载的时候才会执行import("../xxx.js").then(()=>{}),会把这些import打包成另外的.js等他执行到import的时候才会加载对应的js文件
+// 这里有个elist报错,是由于高版本9.1版本报错报错 Parsing error: 'import' and 'export' may only appear at the top level
+// 在eslint 7.1低版本中解决方式很简单在.eslintrc.js中增加plugins:["import"] 配置即可,
+// 在eslint 9.1高版本中解决方式很复杂,需要安装eslint-import-resolver-webpack,在.eslintrc.js中增加plugins:["import"],settings:{'import/resolver':{webpack:{config:"webpack.config.js"}}}配置即可
+//  起因 :出现的问题,9.1中舍弃了很多插件,导致新插件得重新安装,比如7.1版本用到的babel-eslint插件在9.1中这个插件已经启用了并且改名了,叫@babel/eslint-parser,所以9.1肯定会报错,安装@babel/eslint-parser 的同时babel的配置也更新了应该引入@babel/core @babel/preset-env @babel/plugin-transform-modules-commonjs插件,真是牵一发动全身啊,不过配置多是多,但是9.1功能比7.1多多了!!!.
+// // 解决方案
+// 安装 eslint插件 @babel/eslint-parser 
+// 安装babel 插件 @babel/core @babel/preset-env @babel/plugin-transform-modules-commonjs
+// 在.babel.config.js中增加
+// presets: [
+//     ["@babel/preset-env", {
+//       "modules": false,
+//       "useBuiltIns": "usage",
+//       "corejs": 3
+//     }]
+// ],
+// plugins: ["@babel/plugin-transform-modules-commonjs"]
+// 在.eslintrc.js增加
+// parser: '@babel/eslint-parser',
+// parserOptions: {
+//     requireConfigFile: false,
+//     babelOptions: {
+//         presets: ['@babel/preset-env']
+//     }
+// }
+
+
+
+
+
 // 面试官:相对路径和绝对路径有什么区别?
 // 绝对路径 => 
 // <a href="/user/index.text"></a> 绝对路径写法(省略协议,域名,端口)

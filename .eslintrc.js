@@ -10,5 +10,12 @@ module.exports = {
     },
     rules:{
         "no-var":2,//不能用 var来定义变量
+    },
+    parser: '@babel/eslint-parser',
+    parserOptions: {
+        requireConfigFile: false,
+        babelOptions: {
+            presets: ['@babel/preset-env']
+        }
     }
 }

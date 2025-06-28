@@ -143,7 +143,12 @@ module.exports = {
             new TerserWebpackPlugin({
                 parallel: threads//开启多进程打包
             })
-        ]
+        ],
+        // 代码分割操作
+        splitChunks:{
+            chunks:"all",
+            // 其他的都用默认代码
+        }
     },
     devServer:{
         hot:false,//关闭,这里默认是开启(HMR)的,所以生产模式必须写
