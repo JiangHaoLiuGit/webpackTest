@@ -128,6 +128,12 @@
 // 所以换插件，换vue团队的插件，他们在维护@vue/preload-webpack-plugin 如果不知道怎么用@vue/preload-webpack-plugin插件可以去npmjs.com去康康
 // 结果,打包的文件会自动引入<link href="static/js/math.chunk.js" rel="prefetch"> 会在浏览器空闲时间加载(实现方式,浏览器会把他的渲染优先级设置为Lowest比较低的渲染优先级)
 
+// 高级 NetWork Cache
+// 修改math.js的时候会重新生成代码分割文件math.chunk.js这个没问题,但是会发现新的问题,由于main.js模块引入了math.chunk.js模块,所以main.js也会重新打包,项目中会有很多模块依赖的情况,如果a模块重新打包会使另一个没有发生变化的b模块也重新打包,这是非常不合理的,也是十分浪费性能的,所以解决方案是生成一个临时的runtime文件,只用来记录文件的hash值以及依赖关系,如果b模块重新打包,hash值变了,另一个没有变化的a模块会去runtime文件中找最新的依赖模块依赖关系以及hash值这样就解决了a模块需要重新打包造成性能浪费的问题
+// 配置搜索runtimeChunk
+// 配置hash和contenthash有什么区别
+// 比如打包js文件有用hash的话所有js文件都用相同的hash,而contenthash的话每个打包生成的js文件hash都不一样,所以你希望所有js文件都拥有相同hash值时才会用hash,而这个场景只能用contenthash!!!
+
 
 
 // 面试官:相对路径和绝对路径有什么区别?

@@ -35,9 +35,9 @@ module.exports = {
         // 文件的输出路径 绝对路径
         path:path.resolve(__dirname,"../dist"),
         // 入口文件输出的文件名 [name] 单入口的话就是和入口文件名字一致,如果是多入口的话也能这么写.所以非常合适
-        filename: "static/js/[name].js",
+        filename: "static/js/[name].[contenthash:10].js",
         // 给打包输出的其他文件命名
-        chunkFilename:"static/js/[name].chunk.js",
+        chunkFilename:"static/js/[name].[contenthash:10].chunk.js",
         // 图片,字体等通过type:asset处理的资源都会打包到这里
         assetModuleFilename:"static/media/[hash][ext][query]",
         // weback5 不需要添加plugin了,直接内置功能,因为功能太基础了不需要分出去pulgin插件
@@ -162,7 +162,10 @@ module.exports = {
         splitChunks:{
             chunks:"all",
             // 其他的都用默认代码
-        }
+        },
+        runtimeChunk:{
+            name:(entrypoint) => `runtime~${entrypoint.name}.js`,
+        },
     },
     devServer:{
         hot:false,//关闭,这里默认是开启(HMR)的,所以生产模式必须写

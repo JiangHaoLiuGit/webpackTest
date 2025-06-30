@@ -1,4 +1,5 @@
 import {num} from './js/num'
+import {count} from './js/count'
 import './css/iconfont.css'
 import './css/style/style.css'
 import './css/less/index.less'
@@ -8,13 +9,14 @@ import './css/stylus/index.styl'
 
 document.getElementById("computedBtn").onclick = function(){
     // /*webpackChunkName: "math" */ webpack 魔法命名
-    import(/*webpackChunkName: "math" */'./js/count').then(({count})=>{
-        console.log(count(6,2))
+    import(/*webpackChunkName: "math" */'./js/math').then(({mul})=>{
+        console.log(mul(6,2))
     })
 }
 
 let nums = num(1,3,6,8)
 console.log(nums)
+console.log(count(10,5))
 
 if(module.hot){
     //判断是否支持HMR,把count.js添加
