@@ -118,7 +118,15 @@
 
 // 高级 splitChunks 给打包文件统一整体命名
 
-
+// 高级 PreLoad和PreFetch
+// 都可以在浏览器空闲时间加载代码分割部分,比如import懒加载的文件,不用等到了那个页面才加载资源,如果import页面资源太多,避免会造成卡顿
+// 区别:
+// PreLoad:加载优先级高,PreFetch低
+// PreLoad:加载当前页面资源,PreFetch:加载其他页面资源
+// 缺点,api浏览器兼容性差,可以去caniuse.com查询前端api的浏览器版本支持情况
+// 你可以看出来preLoad在IE下完全不支持，preFetch在IE11可以用，而且这个插件已经不维护了
+// 所以换插件，换vue团队的插件，他们在维护@vue/preload-webpack-plugin 如果不知道怎么用@vue/preload-webpack-plugin插件可以去npmjs.com去康康
+// 结果,打包的文件会自动引入<link href="static/js/math.chunk.js" rel="prefetch"> 会在浏览器空闲时间加载(实现方式,浏览器会把他的渲染优先级设置为Lowest比较低的渲染优先级)
 
 
 

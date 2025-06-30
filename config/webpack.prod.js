@@ -5,6 +5,7 @@ const ESLintPlugin = require("eslint-webpack-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const CssMinimizerWebpackPlugin = require("css-minimizer-webpack-plugin")
 const TerserWebpackPlugin = require("terser-webpack-plugin")
+const VuePreLoadWebpackPlugin = require("@vue/preload-webpack-plugin")
 
 const threads = os.cpus().length //获取cpu核数
 
@@ -137,7 +138,15 @@ module.exports = {
         // new CssMinimizerWebpackPlugin(),
         // new TerserWebpackPlugin({
         //     parallel: threads//开启多进程打包
-        // })
+        // }),
+        new VuePreLoadWebpackPlugin({
+            // 启用preload还是prefetch
+            // rel:"preload",
+            // // 已sciprt标签引入
+            // as:"script"
+            rel:"prefetch"
+        })
+
     ],
     // webpack5 推荐压缩的plugin放到这里,以后会只能放到这里
     optimization:{
