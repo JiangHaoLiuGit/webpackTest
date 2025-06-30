@@ -1,11 +1,13 @@
 const path = require("path") //nodejs 核心模块,用来处理路径问题
 const os = require("os")
+const WorkBoxWebpackPlugin = require("workbox-webpack-plugin")
 const HTMLWebpackPlugin = require("html-webpack-plugin")
 const ESLintPlugin = require("eslint-webpack-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const CssMinimizerWebpackPlugin = require("css-minimizer-webpack-plugin")
 const TerserWebpackPlugin = require("terser-webpack-plugin")
 const VuePreLoadWebpackPlugin = require("@vue/preload-webpack-plugin")
+
 
 const threads = os.cpus().length //获取cpu核数
 
@@ -145,6 +147,11 @@ module.exports = {
             // // 已sciprt标签引入
             // as:"script"
             rel:"prefetch"
+        }),
+        new WorkBoxWebpackPlugin.GenerateSW({
+            // 这些选项快速启用 ServiceWorkers
+            clientsClaim:true,
+            skipWaiting:true
         })
 
     ],

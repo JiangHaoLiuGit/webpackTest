@@ -39,3 +39,13 @@ magess.then((res) => {
 })
 let arr = [2,5,7,9]
 console.log(arr.includes(5))
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js').then(registration => {
+        console.log('SW registered: ', registration);
+      }).catch(registrationError => {
+        console.log('SW registration failed: ', registrationError);
+      });
+    });
+}
