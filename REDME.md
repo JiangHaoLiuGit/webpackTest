@@ -11,7 +11,9 @@
 // 修改图片输出目录 配置filename属性
 // 自动清空上次打包内容 webpack4 要用html-webpack-plugin 在webpack5中只需要在output中配置 clean:true就可以了
 // 处理字体文件 配置 test 正则匹配 类型 type:"asset" filename配置打包出口文件夹
-// 处理js文件 因为现在打包的js,比如es6的箭头函数,promise打包出来仍然是js6语法,有些浏览器不认识es6,比如ie浏览器,这种代码放到ie浏览器直接白屏,客户要骂娘了,至少要兼容ie11吧,所以得进一步打包配置
+// 处理js文件 因为现在打包的js,比如es6的箭头函数包出来仍然是js6语法,有些浏览器不认识es6,比如ie浏览器,这种代码放到ie浏览器直接白屏,客户要骂娘了,至少要兼容ie11吧,所以得进一步打包配置
+// 配置babel-loader的同时要配置babel.config.js引入智能预设@babel/preset-env
+// 能干嘛,为什么引入?
 // 为什么要引入eslint ,eslint能干嘛,用的时候该怎么用
 // babel 为什么引入 处理文件是babelrc.js有的时候是babel.config.js,有什么时候都存在?这应该是版本问题,不同版本配置文件不同
 // 处理html,为什么要处理,不处理行不行,他会自动引入生成的js和css,比如mini-css-webpack-plugin生成的mian.css他会通过link的形式自动引入,js也会自动引入webpackJs.js,如果有多个js生产而且还有复杂先后关系,怕你开发者搞乱了,这点也做的不错,自动引入就不会出错
@@ -133,6 +135,14 @@
 // 配置搜索runtimeChunk
 // 配置hash和contenthash有什么区别
 // 比如打包js文件有用hash的话所有js文件都用相同的hash,而contenthash的话每个打包生成的js文件hash都不一样,所以你希望所有js文件都拥有相同hash值时才会用hash,而这个场景只能用contenthash!!!
+
+// 高级 core.js解决js兼容性问题
+// 前面不是配置babel-loader以及bable.config.js处理过es代码了吗?怎么还要处理js兼容性问题
+// 前面配置的只能解决es6出现的=> 或者arr.reduce这些es6代码,比如一些es6+代码比如new Promoise的话打包处理不了,他会原模原样输出new Promise,这样如果到ie或者其他浏览器不识别的话直接报错会造成白屏
+// 做法:npm i core-js
+// 第一种:在main.js 全局 引入 import 'core-js'  //完整功能(包含promise功能)打包体积 212kb
+// 第二种:按需引入 import 'core-js/es/promise'  //部分功能(只有promise功能)打包体积 33kb
+// 第三种:@babel/preset-env智能预设配置 (我这里没有生效不知道为什么)
 
 
 

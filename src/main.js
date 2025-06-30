@@ -6,6 +6,10 @@ import './css/less/index.less'
 import './css/sass/index.sass'
 import './css/sass/index.scss'
 import './css/stylus/index.styl'
+// 全部引入
+// import "core-js"
+// 引入部分功能
+// import 'core-js/es6/promise'
 
 document.getElementById("computedBtn").onclick = function(){
     // /*webpackChunkName: "math" */ webpack 魔法命名
@@ -23,3 +27,15 @@ if(module.hot){
     module.hot.accept("./js/count");
     module.hot.accept("./js/num");
 }
+
+let magess = new Promise(function (resolve) {
+    setTimeout(() =>{
+        resolve("hello 你好")
+    })
+})
+
+magess.then((res) => {
+    console.log("res:"+res)
+})
+let arr = [2,5,7,9]
+console.log(arr.includes(5))

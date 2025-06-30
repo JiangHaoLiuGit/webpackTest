@@ -17,5 +17,8 @@ module.exports = {
         babelOptions: {
             presets: ['@babel/preset-env']
         }
+    },
+    globals:{
+        "Promise":"readonly"
     }
 }
