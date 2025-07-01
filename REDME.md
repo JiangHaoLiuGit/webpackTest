@@ -151,6 +151,14 @@
 总结
 ![Alt text](image.png)
 
+// react-cli开发模式配置
+// 热模块替换怎么做到的?
+// 样式的热模块替换是style-loader做的,jsx变化需要通过
+// 第一步:开启host:true,
+// 第二步:处理js的babel-loader中添加plugins: ["react-refresh/babel"], // 开启js的HMR功能],
+// 第三步:在plugins:[new ReactRefreshWebpackPlugin()], // 解决js的HMR功能运行时全局变量的问题
+
+
 
 
 // 面试官:相对路径和绝对路径有什么区别?

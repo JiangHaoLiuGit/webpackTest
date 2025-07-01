@@ -1,184 +1,171 @@
-const path = require("path") //nodejs 核心模块,用来处理路径问题
-const os = require("os")
-const WorkBoxWebpackPlugin = require("workbox-webpack-plugin")
-const HTMLWebpackPlugin = require("html-webpack-plugin")
-const ESLintPlugin = require("eslint-webpack-plugin")
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-const CssMinimizerWebpackPlugin = require("css-minimizer-webpack-plugin")
-const TerserWebpackPlugin = require("terser-webpack-plugin")
-const VuePreLoadWebpackPlugin = require("@vue/preload-webpack-plugin")
+// webpack.prod.js
+const path = require("path");
+const ESLintWebpackPlugin = require("eslint-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const TerserWebpackPlugin = require("terser-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
-
-const threads = os.cpus().length //获取cpu核数
-
-function getStyleLoader(loaderName){
-    return [
-        MiniCssExtractPlugin.loader,
-        'css-loader',
-        {
-            loader: "postcss-loader",
-            options:{
-                postcssOptions: {
-                    plugins: [
-                        "postcss-preset-env", // 能解决大多数样式兼容性问题
-                    ]
-                }
-            }
+const getStyleLoaders = (preProcessor) => {
+  return [
+    MiniCssExtractPlugin.loader,
+    "css-loader",
+    {
+      loader: "postcss-loader",
+      options: {
+        postcssOptions: {
+          plugins: [
+            "postcss-preset-env", // 能解决大多数样式兼容性问题
+          ],
         },
-        loaderName
-    ].filter(item => item != undefined)
-}
+      },
+    },
+    preProcessor,
+  ].filter(Boolean);
+};
 
 module.exports = {
-    //入口 相对路径
-    entry: './src/main.js',
-    //输出
-    output:{
-        // 文件的输出路径 绝对路径
-        path:path.resolve(__dirname,"../dist"),
-        // 入口文件输出的文件名 [name] 单入口的话就是和入口文件名字一致,如果是多入口的话也能这么写.所以非常合适
-        filename: "static/js/[name].[contenthash:10].js",
-        // 给打包输出的其他文件命名
-        chunkFilename:"static/js/[name].[contenthash:10].chunk.js",
-        // 图片,字体等通过type:asset处理的资源都会打包到这里
-        assetModuleFilename:"static/media/[hash][ext][query]",
-        // weback5 不需要添加plugin了,直接内置功能,因为功能太基础了不需要分出去pulgin插件
-        clean:true,
-    },
-    // 加载器
-    module:{
-        rules: [
-            {
-                oneOf:[
-                    //loader配置
-                    {
-                        //用来匹配.css结尾的文件
-                        test: /\.css$/,
-                        // use数组里面的loader执行顺序是从右到左的
-                        use:getStyleLoader(),
-                    },
-                    {
-                        test: /\.less$/,
-                        use:getStyleLoader('less-loader')
-                    },
-                    {
-                        test:/\.s[ac]ss$/,
-                        use:getStyleLoader('sass-loader')
-                    },
-                    {
-                        test:/\.styl$/,
-                        use:getStyleLoader('stylus-loader')
-                    },
-                    {
-                        test:/\.(png|jpe?g|gif|webp|svg)$/,
-                        type:"asset",
-                        parser:{
-                            dataUrlCondition:{
-                                // 小于30kb的会被打包成base 64位图片
-                                // 可以减少小图片(小于30kb)的请求次数,减少服务器请求压力
-                                // 会增加30%打包体积,所以只打包小图片,大图就性价比不高
-                                maxSize:30 * 1024
-                            }
-                        },
-                        // hash webpack生产的hash值
-                        // ext 图片的后缀png/jpg
-                        // query 图片的地址参数 ?name="???"
-                        // generator:{
-                        //     filename:"static/img/[hash][ext][query]"
-                        // }
-                    },
-                    {
-                        test:/\.(ttf|woff2?|mp3|map4|avi)$/,
-                        type:"asset/resource",
-                        // generator:{
-                        //     filename:"static/media/[hash:10][ext][query]"
-                        // }
-                    },
-                    {
-                        test: /\.js$/,
-                        // exclude: /node_modules/,//处理js文件的时候排除node_modules,因为已经处理过了,在处理会变慢,
-                        include:path.resolve(__dirname,"../src"), //只处理src下的js文件,其他文件不处理
-                        use:[
-                            {
-                                loader: 'thread-loader',
-                                options:{
-                                    works:threads,//进程数量
-                                }
-                            },
-                            {
-                                loader: 'babel-loader',
-                                options:{
-                                    cacheDirectory:true,//开启babel缓存
-                                    cacheCompression:false,//关闭缓存文件压缩(缺点,占用本地内存,放到node_modules里,优点:打包速度快)
-                                    plugins:["@babel/plugin-transform-runtime"],//减少代码体积
-                                }
-                            }
-                        ]
-                    }
-                ]
-            }
+  entry: "./src/main.js",
+  output: {
+    path: path.resolve(__dirname, "../dist"),
+    filename: "static/js/[name].[contenthash:10].js",
+    chunkFilename: "static/js/[name].[contenthash:10].chunk.js",
+    assetModuleFilename: "static/js/[hash:10][ext][query]",
+    clean: true,
+  },
+  module: {
+    rules: [
+      {
+        oneOf: [
+          {
+            // 用来匹配 .css 结尾的文件
+            test: /\.css$/,
+            // use 数组里面 Loader 执行顺序是从右到左
+            use: getStyleLoaders(),
+          },
+          {
+            test: /\.less$/,
+            use: getStyleLoaders("less-loader"),
+          },
+          {
+            test: /\.s[ac]ss$/,
+            use: getStyleLoaders("sass-loader"),
+          },
+          {
+            test: /\.styl$/,
+            use: getStyleLoaders("stylus-loader"),
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)$/,
+            type: "asset",
+            parser: {
+              dataUrlCondition: {
+                maxSize: 10 * 1024, // 小于10kb的图片会被base64处理
+              },
+            },
+          },
+          {
+            test: /\.(ttf|woff2?)$/,
+            type: "asset/resource",
+          },
+          {
+            test: /\.(jsx|js)$/,
+            include: path.resolve(__dirname, "../src"),
+            loader: "babel-loader",
+            options: {
+              cacheDirectory: true,
+              cacheCompression: false,
+              plugins: [
+                // "@babel/plugin-transform-runtime" // presets中包含了
+              ],
+            },
+          },
         ],
-    },
-    // 插件
-    plugins:[
-        //plugin 的配置
-        new ESLintPlugin({
-            // 检测哪些文件
-            context:path.resolve(__dirname,"../src"),
-            exclude:"node_modules",//默认值
-            cache:true,
-            cacheLocation:path.resolve(__dirname,"../node_modules/.cache/eslintCache"),
-            threads//开启多进程打包
-        }),
-        new HTMLWebpackPlugin({
-            template:path.resolve(__dirname,'../public/index.html')
-        }),
-        new MiniCssExtractPlugin({
-            filename:"static/css/[name].[contenthash:8].css",
-            chunkFilename:"static/css/[name].[contenthash:8].chunk.css"
-        }),
-        // new CssMinimizerWebpackPlugin(),
-        // new TerserWebpackPlugin({
-        //     parallel: threads//开启多进程打包
-        // }),
-        new VuePreLoadWebpackPlugin({
-            // 启用preload还是prefetch
-            // rel:"preload",
-            // // 已sciprt标签引入
-            // as:"script"
-            rel:"prefetch"
-        }),
-        new WorkBoxWebpackPlugin.GenerateSW({
-            // 这些选项快速启用 ServiceWorkers
-            clientsClaim:true,
-            skipWaiting:true
-        })
-
+      },
     ],
-    // webpack5 推荐压缩的plugin放到这里,以后会只能放到这里
-    optimization:{
-        minimizer:[
-            // 压缩css的,并且创建link标签引入
-            new CssMinimizerWebpackPlugin(),
-            // terser是webpack生产环境默认激活的压缩js内置插件,这里配置可以加快他的压缩时间
-            new TerserWebpackPlugin({
-                parallel: threads//开启多进程打包
-            })
-        ],
-        // 代码分割操作
-        splitChunks:{
-            chunks:"all",
-            // 其他的都用默认代码
+  },
+  plugins: [
+    new ESLintWebpackPlugin({
+      context: path.resolve(__dirname, "../src"),
+      exclude: "node_modules",
+      cache: true,
+      cacheLocation: path.resolve(
+        __dirname,
+        "../node_modules/.cache/.eslintcache"
+      ),
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, "../public/index.html"),
+    }),
+    new MiniCssExtractPlugin({
+      filename: "static/css/[name].[contenthash:10].css",
+      chunkFilename: "static/css/[name].[contenthash:10].chunk.css",
+    }),
+    // 将public下面的资源复制到dist目录去（除了index.html）
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, "../public"),
+          to: path.resolve(__dirname, "../dist"),
+          toType: "dir",
+          noErrorOnMissing: true, // 不生成错误
+          globOptions: {
+            // 忽略文件
+            ignore: ["**/index.html"],
+          },
+          info: {
+            // 跳过terser压缩js
+            minimized: true,
+          },
         },
-        runtimeChunk:{
-            name:(entrypoint) => `runtime~${entrypoint.name}.js`,
+      ],
+    }),
+  ],
+  optimization: {
+    // 压缩的操作
+    minimizer: [
+      new CssMinimizerPlugin(),
+      new TerserWebpackPlugin(),
+      new ImageMinimizerPlugin({
+        minimizer: {
+          implementation: ImageMinimizerPlugin.imageminGenerate,
+          options: {
+            plugins: [
+              ["gifsicle", { interlaced: true }],
+              ["jpegtran", { progressive: true }],
+              ["optipng", { optimizationLevel: 5 }],
+              [
+                "svgo",
+                {
+                  plugins: [
+                    "preset-default",
+                    "prefixIds",
+                    {
+                      name: "sortAttrs",
+                      params: {
+                        xmlnsOrder: "alphabetical",
+                      },
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
         },
+      }),
+    ],
+    splitChunks: {
+      chunks: "all",
     },
-    devServer:{
-        hot:false,//关闭,这里默认是开启(HMR)的,所以生产模式必须写
+    runtimeChunk: {
+      name: (entrypoint) => `runtime~${entrypoint.name}`,
     },
-    // 模式
-    mode:"production",
-    // 生产模式的源代码映射配置:映射到具体哪一行那一列,缺点打包会比较慢
-    devtool:"source-map"
-}
+  },
+  resolve: {
+    extensions: [".jsx", ".js", ".json"],
+  },
+  mode: "production",
+  devtool: "source-map",
+};
