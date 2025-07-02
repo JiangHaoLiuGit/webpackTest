@@ -8,9 +8,11 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 
+const isProdution = process.env.NODE_ENV === 'prodution';
+
 const getStyleLoaders = (preProcessor) => {
   return [
-    MiniCssExtractPlugin.loader,
+    isProdution?MiniCssExtractPlugin.loader:"style-loader",
     "css-loader",
     {
       loader: "postcss-loader",
@@ -29,9 +31,9 @@ const getStyleLoaders = (preProcessor) => {
 module.exports = {
   entry: "./src/main.js",
   output: {
-    path: path.resolve(__dirname, "../dist"),
-    filename: "static/js/[name].[contenthash:10].js",
-    chunkFilename: "static/js/[name].[contenthash:10].chunk.js",
+    path: isProdution?path.resolve(__dirname, "../dist"):undefined,
+    filename: isProdution?"static/js/[name].[contenthash:10].js":"static/js/[name].js",
+    chunkFilename: isProdution?"static/js/[name].[contenthash:10].chunk.js":"static/js/[name].chunk.js",
     assetModuleFilename: "static/js/[hash:10][ext][query]",
     clean: true,
   },

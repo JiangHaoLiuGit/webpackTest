@@ -159,7 +159,8 @@
 // 第三步:在plugins:[new ReactRefreshWebpackPlugin()], // 解决js的HMR功能运行时全局变量的问题
 
 
-
+// 合并生产和开发模式配置
+把webpack.development.js和webpack.production.js合并成webpack.config.js
 
 // 面试官:相对路径和绝对路径有什么区别?
 // 绝对路径 => 
@@ -192,7 +193,7 @@
 //    user
 //        index.jjs
 // js/user/index.js中找src怎么找 => path.resolve(__dirname,"src")
-// __dirname代表项目的根路径
+// __dirname代表此文件的路径地址
 
 // 相对路径
 // js/user/index.js中找src怎么找 ../../src

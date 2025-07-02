@@ -1,16 +1,19 @@
-// webpack.dev.js
+// webpack.prod.js
 const path = require("path");
 const ESLintWebpackPlugin = require("eslint-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const TerserWebpackPlugin = require("terser-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
-const isProdution = process.env.NODE_ENV === 'prodution';
-console.log(isDev)
+const isProduction = process.env.NODE_ENV === 'production';
 
 const getStyleLoaders = (preProcessor) => {
   return [
-    "style-loader",
+    isProduction?MiniCssExtractPlugin.loader:"style-loader",
     "css-loader",
     {
       loader: "postcss-loader",
@@ -29,10 +32,11 @@ const getStyleLoaders = (preProcessor) => {
 module.exports = {
   entry: "./src/main.js",
   output: {
-    path: undefined,
-    filename: "static/js/[name].js",
-    chunkFilename: "static/js/[name].chunk.js",
+    path: isProduction?path.resolve(__dirname, "../dist"):undefined,
+    filename: "static/js/[name].[contenthash:10].js",
+    chunkFilename: "static/js/[name].[contenthash:10].chunk.js",
     assetModuleFilename: "static/js/[hash:10][ext][query]",
+    clean: true,
   },
   module: {
     rules: [
@@ -78,8 +82,8 @@ module.exports = {
               cacheCompression: false,
               plugins: [
                 // "@babel/plugin-transform-runtime", // presets中包含了
-                "react-refresh/babel", // 开启js的HMR功能
-              ],
+                !isProduction && "react-refresh/babel", // 开启js的HMR功能
+              ].filter(Boolean),
             },
           },
         ],
@@ -99,9 +103,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "../public/index.html"),
     }),
-    new ReactRefreshWebpackPlugin(), // 解决js的HMR功能运行时全局变量的问题
+    isProduction && new MiniCssExtractPlugin({
+      filename: "static/css/[name].[contenthash:10].css",
+      chunkFilename: "static/css/[name].[contenthash:10].chunk.css",
+    }),
     // 将public下面的资源复制到dist目录去（除了index.html）
-    new CopyPlugin({
+    isProduction && new CopyPlugin({
       patterns: [
         {
           from: path.resolve(__dirname, "../public"),
@@ -119,8 +126,43 @@ module.exports = {
         },
       ],
     }),
-  ],
+    !isProduction && new ReactRefreshWebpackPlugin(), // 解决js的HMR功能运行时全局变量的问题
+  ].filter(Boolean),
   optimization: {
+    // 是否开启压缩,生产需要,开发为false就不会
+    minimize:isProduction,
+    // 压缩的操作
+    minimizer: [
+      new CssMinimizerPlugin(),
+      new TerserWebpackPlugin(),
+      new ImageMinimizerPlugin({
+        minimizer: {
+          implementation: ImageMinimizerPlugin.imageminGenerate,
+          options: {
+            plugins: [
+              ["gifsicle", { interlaced: true }],
+              ["jpegtran", { progressive: true }],
+              ["optipng", { optimizationLevel: 5 }],
+              [
+                "svgo",
+                {
+                  plugins: [
+                    "preset-default",
+                    "prefixIds",
+                    {
+                      name: "sortAttrs",
+                      params: {
+                        xmlnsOrder: "alphabetical",
+                      },
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+      }),
+    ],
     splitChunks: {
       chunks: "all",
     },
@@ -129,7 +171,7 @@ module.exports = {
     },
   },
   resolve: {
-    extensions: [".jsx", ".js", ".json"], // 自动补全文件扩展名，让jsx可以使用
+    extensions: [".jsx", ".js", ".json"],
   },
   devServer: {
     open: true,
@@ -139,6 +181,6 @@ module.exports = {
     compress: true,
     historyApiFallback: true, // 解决react-router刷新404问题 可以让404的时候重定向到dist/index.html然后就能找到对应的路由
   },
-  mode: "development",
-  devtool: "cheap-module-source-map",
+  mode: isProduction ? "production" : "development",
+  devtool: isProduction ? "source-map" : 'cheap-module-source-map',
 };
