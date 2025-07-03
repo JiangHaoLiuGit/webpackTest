@@ -165,6 +165,27 @@ module.exports = {
     ],
     splitChunks: {
       chunks: "all",
+      cacheGroups:{
+        // react react-dom react-router-dom 一起打包成一个js
+        react:{
+          test: /[\\/]node_modules[\\/]react(.*)?[\\/]/,
+          name:"chunk-react",
+          // priority先打包权重高的
+          priority:40,
+        },
+        // antd 打的包成一个js
+        antd:{
+          test: /[\\/]node_modules[\\/]antd[\\/]/,
+          name:"chunk-antd",
+          priority:30,
+        },
+        // 剩下的打包成一个js
+        libs:{
+          test: /[\\/]node_modules[\\/]/,
+          name:"chunk-libs",
+          priority:20,
+        }
+      }
     },
     runtimeChunk: {
       name: (entrypoint) => `runtime~${entrypoint.name}`,
@@ -183,4 +204,5 @@ module.exports = {
   },
   mode: isProduction ? "production" : "development",
   devtool: isProduction ? "source-map" : 'cheap-module-source-map',
+  performance:false,//关闭性能分析工具
 };

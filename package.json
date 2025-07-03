@@ -16,6 +16,7 @@
     "@babel/preset-env": "^7.27.2",
     "@babel/preset-react": "^7.27.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.5",
+    "antd": "^5.26.3",
     "babel-loader": "^8.2.5",
     "babel-preset-react-app": "^10.0.1",
     "copy-webpack-plugin": "^10.2.4",
@@ -44,7 +45,6 @@
     "webpack-dev-server": "^4.9.0"
   },
   "dependencies": {
-    "antd": "^4.20.2",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0"

@@ -160,7 +160,39 @@
 
 
 // 合并生产和开发模式配置
-把webpack.development.js和webpack.production.js合并成webpack.config.js
+// 把webpack.development.js和webpack.production.js合并成webpack.config.js
+
+// 优化React-cli配置
+// 引入antd 并自定义主题色 https://ant-design.antgroup.com/docs/react/migrate-less-variables-cn
+
+// 分析优化dist打包目录
+// 三个文件是node_modules统一打包的js,比较大,包括
+// react系列:react/react-cli/react-dom-router/react-dom
+// antd系列:adtd开头的文件
+// 剩余文件
+// 333.js 353KB
+// 打包的项目js文件
+// main.js 1.43kb
+// 临时文件记录文件以及队友的hash绑定关系,防止一个hash值变了另一个也要重新打包
+// runtime~main.js 5.423Kb
+// 按需导入的user模块
+// user.js 0.3kb
+// 按需导入的home模块
+// home.js 0.4kb
+
+// 优化策略 , 333.js太大了,需要分包,
+// 分成三块 : react系列打包到一起,antd系列打包到一起,剩下的打包到一起
+// splitChunks中添加分组,用正则匹配react文件以及antd文件
+
+// 333.js 353KB被分成3块
+// chunk-antd 66.2kb
+// chunk-react 145kb
+// chunk-libs 142kb
+// 总体加起来没小,但是分成三个文件,适用一些打包出来的总文件太大的,这样加载容易丢失,分散会好一点
+
+// 每次打包都会开启性能分析提示那些打包文件过大
+// 配置performance:false
+
 
 // 面试官:相对路径和绝对路径有什么区别?
 // 绝对路径 => 
