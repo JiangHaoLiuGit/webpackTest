@@ -97,7 +97,7 @@ module.exports = {
         test: /\.vue$/,
         loader: "vue-loader", // 内部会给vue文件注入HMR功能代码
         options: {
-          // 开启缓存
+          // 开启缓存,下次打包会更快
           cacheDirectory: path.resolve(
             __dirname,
             "node_modules/.cache/vue-loader"
