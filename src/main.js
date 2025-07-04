@@ -1,13 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import {BrowserRouter as Router} from "react-router-dom"
-import App from './App';
-
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-console.log(root);
-root.render(
-    <Router>
-        <App></App>
-    </Router>
-);
+import {createApp} from 'vue'
+import App from './App'
+import router from './router'
+createApp(App).use(router).mount(document.getElementById("app"))

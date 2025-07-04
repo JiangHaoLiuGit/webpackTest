@@ -1,4 +1,3 @@
 module.exports = {
-    // 使用react官方规则
-    presets: ["react-app"],
-  };
+    presets: ["@vue/cli-plugin-babel/preset"],
+};

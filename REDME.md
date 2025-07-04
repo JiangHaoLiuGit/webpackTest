@@ -193,6 +193,19 @@
 // 每次打包都会开启性能分析提示那些打包文件过大
 // 配置performance:false
 
+// Vue-cli开发模式
+// 和react区别,不需要jsx解析.后缀名自动补全不需要jsx而是vue
+// webpack处理.vue文件必须需要vue-loader解析vue文件然后再用vue-template-compiler才能处理.vue文件
+
+
+// vue相关
+// 在webpack处理vue单文件组件文件(SFC)的话需要引入vue-loader解析vue文件中的template,srcipt,style文件
+// 而Vue-cli中已经配置过了vue-loader,所以一般很少人知道
+// vue-loader识别vue文件中的template之后会把内容交给vue-template-compiler,他里面有compilerToFunctions会把html(混合vue语法的格式)转换为浏览器可识别的render函数比如
+// 在vue中把template语法转成vnode
+import VueTemplateCompiler from 'vue-template-compiler'
+const {render , staticRenderFns} = VueTemplateCompiler.compilerToFunctions(`<div>{{message}}</div>`)
+这里的render和this.$options.render理论上应该一样(vue的版本和vue-template-compiler)
 
 // 面试官:相对路径和绝对路径有什么区别?
 // 绝对路径 => 
