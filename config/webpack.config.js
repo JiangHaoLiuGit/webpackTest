@@ -8,9 +8,11 @@ const TerserWebpackPlugin = require("terser-webpack-plugin");
 const {VueLoaderPlugin} = require("vue-loader")
 const {DefinePlugin} = require("webpack")
 
+const isProduction = process.env.NODE_ENV === "production";
+
 function getStulyeLoaders(name){
     return [
-        MiniCssExtractPlugin.loader,
+        isProduction?MiniCssExtractPlugin.loader:"vue-style-loader",
         "css-loader",
         {
             loader:"postcss-loader",
@@ -29,9 +31,9 @@ function getStulyeLoaders(name){
 module.exports = {
     entry:"./src/main.js",
     output:{
-        path:path.resolve(__dirname,"../dist"),
-        filename:"static/js/[name].[contenthash:10].js",
-        chunkFilename:"static/js/[name].[contenthash:10].chunk.js",
+        path:isProduction?path.resolve(__dirname,"../dist"):undefined,
+        filename:isProduction?"static/js/[name].[contenthash:10].js":"static/js/[name].js",
+        chunkFilename:isProduction?"static/js/[name].[contenthash:10].chunk.js":"static/js/[name].chunk.js",
         assetModuleFilename:"static/js/[hash:10][ext][query]",
         clean:true
     },
@@ -95,11 +97,11 @@ module.exports = {
         new HtmlWebpackPlugin({
             template:path.resolve(__dirname,"../public/index.html"),
         }),
-        new MiniCssExtractPlugin({
+        isProduction && new MiniCssExtractPlugin({
             filename: "static/css/[name].[contenthash:10].css",
             chunkFilename: "static/css/[name].[contenthash:10].chunk.css",
-          }),
-        new CopyPlugin({
+        }),
+        isProduction && new CopyPlugin({
             patterns: [
               {
                 from: path.resolve(__dirname, "../public"),
@@ -125,8 +127,9 @@ module.exports = {
             __VUE_PROD_DEVTOOLS__:false,
             __VUE_PROD_HYDRATION_MISMATCH_DETAILS__:false
         })
-    ],
+    ].filter(Boolean),
     optimization:{
+        minimize:isProduction,
         // 压缩的操作
         minimizer: [
             new CssMinimizerPlugin(),
@@ -143,6 +146,11 @@ module.exports = {
     resolve:{
         extensions:[".vue",".js",".json"] , //自动补全文件扩展名,比如react中引入Home组件可以简写Home/index,省略jsx,在vue中引入默认是vue拓展名
     },
-    mode:"production",
-    devtool:"source-map",
+    devServer:{
+        host:"localhost",
+        port:8080,
+        open:true,
+    },
+    mode:isProduction?"production":"development",
+    devtool:isProduction?"source-map":"cheap-module-source-map",
 }
