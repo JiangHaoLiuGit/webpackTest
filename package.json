@@ -42,6 +42,10 @@
     "webpack-dev-server": "^4.9.0"
   },
   "dependencies": {
+    "element-plus": "^2.10.2",
+    "unplugin-auto-import": "^19.3.0",
+    "unplugin-element-plus": "^0.10.0",
+    "unplugin-vue-components": "^28.8.0",
     "vue": "^3.2.33",
     "vue-router": "^4.5.1"
   }
