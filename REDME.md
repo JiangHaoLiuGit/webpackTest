@@ -207,6 +207,33 @@ import VueTemplateCompiler from 'vue-template-compiler'
 const {render , staticRenderFns} = VueTemplateCompiler.compilerToFunctions(`<div>{{message}}</div>`)
 这里的render和this.$options.render理论上应该一样(vue的版本和vue-template-compiler)
 
+// vue-cli优化 和react-cli类似
+
+// loader
+// 四种loader
+// pre-loader 前置loader
+// normal 普通默认loader
+// inline 内联loader
+// post 后置loader
+// 优先级 pre > normal > inline > post
+// 如果类型都一样的话 从右到左或者从下到上
+
+// 通过 enforce:设置
+// loader就是一个js文件,common.js规范,导出一个函数
+
+// 同步loader demo 1.js
+// 异步loader deom 2.js
+// raw loader 3.js
+// pitching loader 4.js 5.js 6.js 触发顺序 4.js.pitch > 5.js.pitch > 6.js.pitch > 6.js.content > 5.js.content > 4.js.content
+
+// loaderApi
+// this.async() 异步api
+// this.callback(err, content, sourceMap?, meta?) 同步api
+// this.getOptions(schema) 获取loader的options配置
+// this.emitFile(name, content, sourceMap) 产生一个文件
+// this.utils.contextify(context, request) 返回一个相对路径
+// this.utils.absolutify(context, request) 返回一个绝对路径 
+
 // 面试官:相对路径和绝对路径有什么区别?
 // 绝对路径 => 
 // <a href="/user/index.text"></a> 绝对路径写法(省略协议,域名,端口)
