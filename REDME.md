@@ -234,6 +234,16 @@ const {render , staticRenderFns} = VueTemplateCompiler.compilerToFunctions(`<div
 // this.utils.contextify(context, request) 返回一个相对路径
 // this.utils.absolutify(context, request) 返回一个绝对路径 
 
+// 第一个loader
+// 删除js文件中的console.log() 同步loader用content.replace正则把console.log替换成空
+
+// 第二个loader
+// 添加作者 用同步loader
+
+// 第三个loaader
+// 实现babel-loader
+
+
 // 面试官:相对路径和绝对路径有什么区别?
 // 绝对路径 => 
 // <a href="/user/index.text"></a> 绝对路径写法(省略协议,域名,端口)
