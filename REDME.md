@@ -203,9 +203,49 @@
 // 而Vue-cli中已经配置过了vue-loader,所以一般很少人知道
 // vue-loader识别vue文件中的template之后会把内容交给vue-template-compiler,他里面有compilerToFunctions会把html(混合vue语法的格式)转换为浏览器可识别的render函数比如
 // 在vue中把template语法转成vnode
-import VueTemplateCompiler from 'vue-template-compiler'
-const {render , staticRenderFns} = VueTemplateCompiler.compilerToFunctions(`<div>{{message}}</div>`)
-这里的render和this.$options.render理论上应该一样(vue的版本和vue-template-compiler)
+// import VueTemplateCompiler from 'vue-template-compiler'
+// const {render , staticRenderFns} = VueTemplateCompiler.compilerToFunctions(`<div>{{message}}</div>`)
+// 这里的render和this.$options.render理论上应该一样(vue的版本和vue-template-compiler)
+
+// vue-cli优化 和react-cli类似
+
+// loader
+// 四种loader
+// pre-loader 前置loader
+// normal 普通默认loader
+// inline 内联loader
+// post 后置loader
+// 优先级 pre > normal > inline > post
+// 如果类型都一样的话 从右到左或者从下到上
+
+// 通过 enforce:设置
+// loader就是一个js文件,common.js规范,导出一个函数
+
+// 同步loader demo 1.js
+// 异步loader deom 2.js
+// raw loader 3.js
+// pitching loader 4.js 5.js 6.js 触发顺序 4.js.pitch > 5.js.pitch > 6.js.pitch > 6.js.content > 5.js.content > 4.js.content
+
+// loaderApi
+// this.async() 异步api
+// this.callback(err, content, sourceMap?, meta?) 同步api
+// this.getOptions(schema) 获取loader的options配置
+// this.emitFile(name, content, sourceMap) 产生一个文件
+// this.utils.contextify(context, request) 返回一个相对路径
+// this.utils.absolutify(context, request) 返回一个绝对路径 
+
+// 第一个loader
+// 删除js文件中的console.log() 同步loader用content.replace正则把console.log替换成空
+
+// 第二个loader
+// 添加作者 用同步loader
+
+// 第三个loaader
+// 实现babel-loader
+
+// 第四个loader
+// file-loader将资源原封不动的弄出去
+
 
 // 面试官:相对路径和绝对路径有什么区别?
 // 绝对路径 => 
